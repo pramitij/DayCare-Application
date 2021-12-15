@@ -129,14 +129,16 @@ public class DBBasicConnection {
 		return teachid;
 	}
 	
-	public void addStudent(String studentName, int age, String fatherName, String motherName, String address, String phone) {
+	public boolean addStudent(String studentName, int age, String fatherName, String motherName, String address, String phone) {
 		try {
 			Statement statmentAddStudents = a.createStatement();
 			statmentAddStudents.executeUpdate("INSERT INTO student(studentname,age,fathername,mothername,address,phone,teacherid) VALUES ('"+studentName+"',"+age+",'"+fatherName+"','"+motherName+"','"+address+"','"+phone+"',"+selectTeacherId(age)+");");
 			LOGGER.log(Level.INFO, "New Student Added");
+			return true;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	

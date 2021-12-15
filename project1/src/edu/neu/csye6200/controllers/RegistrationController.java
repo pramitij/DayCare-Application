@@ -2,6 +2,7 @@ package edu.neu.csye6200.controllers;
 
 import edu.neu.csye6200.models.Student;
 import edu.neu.csye6200.views.RegistrationView;
+import edu.neu.csye6200Backend.DBBasicConnection;
 
 import javax.swing.JOptionPane;
 
@@ -24,12 +25,17 @@ public class RegistrationController implements Controller {
 	}
 
 	private void registerStudent() {
-//		view.getStudentNameTextField()
-//		view.getStudentFatherNameTextField()
-//		view.getStudentMotherNameTextField()
-//		view.getStudentPhoneTextField()
-//		view.getStudentAddressTextField()
-//		view.getStudentDatePicker()
-		JOptionPane.showMessageDialog(null, "Successfully Registered!!", "Message Dialog", JOptionPane.PLAIN_MESSAGE);
+		String name = view.getStudentNameTextField().getText();
+		String fatherName = view.getStudentFatherNameTextField().getText();
+		String motherName = view.getStudentMotherNameTextField().getText();
+		String phone = view.getStudentPhoneTextField().getText();
+		String address = view.getStudentAddressTextField().getText();
+		
+		DBBasicConnection dbc = new DBBasicConnection();
+		boolean is_successful = dbc.addStudent(name, 15, fatherName, motherName, address, phone);
+		if (is_successful)
+			JOptionPane.showMessageDialog(null, "Successfully Registered!!", "Message Dialog", JOptionPane.PLAIN_MESSAGE);
+		else
+			JOptionPane.showMessageDialog(null, "Failed to Registered", "Message Dialog", JOptionPane.PLAIN_MESSAGE);
 	}
 }
