@@ -160,6 +160,10 @@ public class DBBasicConnection {
 		return vacantSection[0];
 	}
 	
+<<<<<<< HEAD
+=======
+
+>>>>>>> f654359 (Add teacher functionality)
 	public boolean addTeacher(String teacherName, int credit, int catergory, String email, String phone) {
 		int sectionId = findSectionId(catergory);
 		try {
