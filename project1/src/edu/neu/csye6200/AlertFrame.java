@@ -70,7 +70,7 @@ public class AlertFrame extends DBBasicConnection{
 				Statement statmentShowStudentList;
 				try {
 					statmentShowStudentList = a.createStatement();
-					ResultSet rs = statmentShowStudentList.executeQuery("select studentname from student where doj=current_date-355");
+					ResultSet rs = statmentShowStudentList.executeQuery("select * from student where doj=current_date-355");
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -82,6 +82,8 @@ public class AlertFrame extends DBBasicConnection{
 		alertFrame.getContentPane().add(btnNewButton);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
+		scrollPane.setVerifyInputWhenFocusTarget(false);
 		scrollPane.setBackground(SystemColor.info);
 		scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		scrollPane.setBounds(10, 190, 1246, 540);
@@ -97,7 +99,7 @@ public class AlertFrame extends DBBasicConnection{
 				Statement statmentShowStudentList;
 				try {
 					statmentShowStudentList = a.createStatement();
-					ResultSet rs = statmentShowStudentList.executeQuery("select teachername from teacher where doj>=current_date-357");
+					ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher where doj>=current_date-357");
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -116,10 +118,9 @@ public class AlertFrame extends DBBasicConnection{
 				Statement statmentShowStudentList;
 				try {
 					statmentShowStudentList = a.createStatement();
-					ResultSet rs = statmentShowStudentList.executeQuery("select teachername from teacher where doj>=current_date-357");
+					ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher where doj>=current_date-357");
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
