@@ -160,12 +160,7 @@ public class DBBasicConnection {
 		return vacantSection[0];
 	}
 	
-<<<<<<< HEAD
-	public boolean addTeacher(String teacherName, int catergory, String email, String phone) {
-=======
-
-	public boolean addTeacher(String teacherName, int credit, int catergory, String email, String phone) {
->>>>>>> cec8c11506f9dfd5189a55d4169caf48359ee76f
+		public boolean addTeacher(String teacherName, int credit, int catergory, String email, String phone) {
 		try {
 			Statement statmentAddStudents = a.createStatement();
 			statmentAddStudents.executeUpdate("INSERT INTO teacher(name,credit,sectionid,catergory) values ('"+teacherName+"',"+0+","+findSectionId(catergory)+","+catergory+",'"+email+"','"+phone+"')");
@@ -310,7 +305,7 @@ public class DBBasicConnection {
 		}
 	}
 	
-	public static void Demo() throws SQLException {
+	public void Demo() throws SQLException {
 		System.out.println("----- Database connection class ------");
 			DBBasicConnection dbc = new DBBasicConnection();
 //			dbc.getVaccinationDetails(3);
