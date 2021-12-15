@@ -121,7 +121,6 @@ public class AlertFrame extends DBBasicConnection{
 					ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher where doj>=current_date-357");
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
