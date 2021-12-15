@@ -13,8 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBBasicConnection {
-	private static CreateConnection cnct = new CreateConnection();
-	private static Connection a = cnct.makeConnection();
+	public CreateConnection cnct = new CreateConnection();
+	public Connection a = cnct.makeConnection();
 	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
 	public int selectTeacherId(int age) {
@@ -160,11 +160,8 @@ public class DBBasicConnection {
 		return vacantSection[0];
 	}
 	
-<<<<<<< HEAD
-	public void addTeacher(String teacherName, int catergory, String email, String phone) {
-=======
-	public boolean addTeacher(String teacherName, int credit, int catergory) {
->>>>>>> d006b22cc04e8ca11af1a7798a655fec3f2ca0c2
+
+	public boolean addTeacher(String teacherName, int credit, int catergory, String email, String phone) {
 		try {
 			Statement statmentAddStudents = a.createStatement();
 			statmentAddStudents.executeUpdate("INSERT INTO teacher(name,credit,sectionid,catergory) values ('"+teacherName+"',"+0+","+findSectionId(catergory)+","+catergory+",'"+email+"','"+phone+"')");
