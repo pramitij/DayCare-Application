@@ -2,6 +2,9 @@ package edu.neu.csye6200.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
@@ -43,5 +46,13 @@ public final class Utils {
 		});
 
 		return datePicker;
+	}
+
+	// get the age in months
+	public static int getAgeInMonths(Date date) {
+		LocalDate today = LocalDate.now();
+		LocalDate bday = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		Period period = Period.between(bday, today);
+		return period.getMonths();
 	}
 }

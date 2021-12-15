@@ -104,6 +104,10 @@ public class RegistrationView implements View {
 		this.teacherRegSubmitButton = teacherRegSubmitButton;
 	}
 
+	public void showPopupDialog(String title, String message) {
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.PLAIN_MESSAGE);
+	}
+
 	// Initialize the page
 	@Override
 	public JPanel initialize() {
