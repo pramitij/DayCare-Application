@@ -118,7 +118,7 @@ public class AlertFrame extends DBBasicConnection{
 				Statement statmentShowStudentList;
 				try {
 					statmentShowStudentList = a.createStatement();
-					ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher where doj>=current_date-357");
+					ResultSet rs = statmentShowStudentList.executeQuery("select s.studentname, i.vaccinationname, i.doseno from immunizations i inner join student s on i.studentid = s.studentid");
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
 					e1.printStackTrace();
