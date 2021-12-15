@@ -49,21 +49,20 @@ public class RegistrationController implements Controller {
 	// add teacher details to db
 	private void registerTeacher() {
 		String name = view.getTeacherNameTextField().getText();
-		String mobile = view.getTeacherMobileTextField().getText();
+		String phone = view.getTeacherMobileTextField().getText();
 		String email = view.getTeacherEmailTextField().getText();
-		String catagory = view.getTeacherCatagoryTextField().getText();
+		int catagory = Integer.parseInt(view.getTeacherCatagoryTextField().getText());
 
-//      TODO FIX dbc.addTeacher AND UNCOMMENT THIS
-//		// add data to db
-//		DBBasicConnection dbc = Utils.getDbConnector();
-//		boolean is_successful = dbc.addTeacher(name, mobile, email, catagory);
-//
-//		// show appropriate message to the user
-//		if (is_successful) {
-//			resetTeacherFields();
-//			view.showPopupDialog("Teacher has successfully Registered!!", "Success");
-//		} else
-//			view.showPopupDialog("Failed to register", "Failure");
+		// add data to db
+		DBBasicConnection dbc = Utils.getDbConnector();
+		boolean is_successful = dbc.addTeacher(name, 0, catagory, email, phone);
+
+		// show appropriate message to the user
+		if (is_successful) {
+			resetTeacherFields();
+			view.showPopupDialog("Teacher has successfully Registered!!", "Success");
+		} else
+			view.showPopupDialog("Failed to register", "Failure");
 	}
 
 	// add student details to db
