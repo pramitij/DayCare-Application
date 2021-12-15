@@ -16,10 +16,8 @@ import javax.swing.JTextField;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 
-import edu.neu.csye6200.controllers.RegistrationController;
 import edu.neu.csye6200.utils.Constants;
 import edu.neu.csye6200.utils.Utils;
-import java.awt.event.*;
 
 public class RegistrationView implements View {
 
