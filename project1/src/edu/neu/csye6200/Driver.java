@@ -99,10 +99,6 @@ public class Driver extends AlertFrame{
 		});
 		homeTabbedPane.addTab("Alerts", null, btnNewButton, null);
 
-//		// 4. Alerts Page
-//		JPanel alertsPanel = new JPanel();
-//		alertsPanel.setBackground(Color.MAGENTA);
-//		homeTabbedPane.addTab("Alerts", null,alertsPanel, null);
 	}
 
 }
