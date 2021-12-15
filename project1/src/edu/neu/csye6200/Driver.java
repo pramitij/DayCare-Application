@@ -2,7 +2,7 @@ package edu.neu.csye6200;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-
+import java.awt.SystemColor;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,15 +12,28 @@ import edu.neu.csye6200.models.Student;
 import edu.neu.csye6200.models.Teacher;
 import edu.neu.csye6200.views.RegistrationView;
 import edu.neu.csye6200.views.StudentImmunizationView;
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import java.awt.Dimension;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
 
 public class Driver extends AlertFrame{
 
 	JFrame frame;
 	StudentImmunizationView studentImmunizationView;
 	RegistrationView registrationView;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -87,8 +100,74 @@ public class Driver extends AlertFrame{
 
 		// 3. Information Page
 		JPanel infoPanel = new JPanel();
-		infoPanel.setBackground(Color.orange);
+		infoPanel.setBackground(SystemColor.inactiveCaptionBorder);
 		homeTabbedPane.addTab("Information", null, infoPanel, null);
+		infoPanel.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
+		scrollPane.setVerifyInputWhenFocusTarget(false);
+		scrollPane.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		scrollPane.setBounds(415, 100, 950, 600);
+		infoPanel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setBackground(SystemColor.window);
+		
+		JLabel lblNewLabel = new JLabel("Patrons Information Page");
+		lblNewLabel.setMinimumSize(new Dimension(155, 13));
+		lblNewLabel.setMaximumSize(new Dimension(155, 13));
+		lblNewLabel.setPreferredSize(new Dimension(165, 13));
+		lblNewLabel.setOpaque(true);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBackground(SystemColor.activeCaption);
+		lblNewLabel.setFont(new Font("Segoe UI Light", Font.PLAIN, 30));
+		lblNewLabel.setBounds(415, 23, 950, 53);
+		infoPanel.add(lblNewLabel);
+		
+		JButton btnNewButton_1 = new JButton("Student Details");
+		btnNewButton_1.setForeground(SystemColor.window);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Statement statmentShowStudentList;
+				try {
+					statmentShowStudentList = a.createStatement();
+					ResultSet rs = statmentShowStudentList.executeQuery("select * from student");
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_1.setBorder(new LineBorder(SystemColor.scrollbar, 1, true));
+		btnNewButton_1.setBackground(new Color(135, 206, 235));
+		btnNewButton_1.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		btnNewButton_1.setBounds(111, 300, 182, 60);
+		infoPanel.add(btnNewButton_1);
+		
+		JButton btnNewButton_1_1 = new JButton("Teachers Details");
+		btnNewButton_1_1.setForeground(SystemColor.window);
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Statement statmentShowStudentList;
+				try {
+					statmentShowStudentList = a.createStatement();
+					ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher");
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_1_1.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		btnNewButton_1_1.setBorder(new LineBorder(SystemColor.scrollbar, 1, true));
+		btnNewButton_1_1.setBackground(new Color(135, 206, 235));
+		btnNewButton_1_1.setBounds(111, 400, 182, 60);
+		infoPanel.add(btnNewButton_1_1);
+		
 		
 		JButton btnNewButton = new JButton("Click for Upcoming Alert's");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -100,5 +179,4 @@ public class Driver extends AlertFrame{
 		homeTabbedPane.addTab("Alerts", null, btnNewButton, null);
 
 	}
-
 }
