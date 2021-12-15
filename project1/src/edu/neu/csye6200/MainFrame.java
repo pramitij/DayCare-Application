@@ -117,13 +117,9 @@ public class MainFrame {
 				
 				if(userName.equals("vinoth") && password.equals("apple")) {
 					JOptionPane.showMessageDialog(frame, "Success");
-//					
-//					FrameTwo ft = new FrameTwo();
-//					ft.FrameTwo.setVisible(true);
 					
-//					HomePage hp = new HomePage();
-//					hp.frame.setVisible(true);
-					
+					Driver homePage = new Driver();
+					homePage.frame.setVisible(true);
 					frame.dispose();
 				}else{
 					JOptionPane.showMessageDialog(frame, "Login credentials are wrong");

@@ -15,7 +15,7 @@ import edu.neu.csye6200.views.StudentImmunizationView;
 
 public class Driver {
 
-	private JFrame frame;
+	JFrame frame;
 	StudentImmunizationView studentImmunizationView;
 	RegistrationView registrationView;
 
