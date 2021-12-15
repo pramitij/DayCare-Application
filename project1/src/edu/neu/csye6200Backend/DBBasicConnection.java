@@ -298,7 +298,6 @@ public class DBBasicConnection {
 		try {
 			// select s.studentname, i.vaccinationname, i.doseno from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'tdap' and i.doseno=2
 			// vaccinationname --- Hib, Dtap, Polio, HepB, Mmr, Varicella
-			// 
 		Statement vaccAlertsHib = a.createStatement();
 		ResultSet resultSetVaccAlertsHib = vaccAlertsHib.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'Hib'");
 		Statement vaccAlertsDtap = a.createStatement();
