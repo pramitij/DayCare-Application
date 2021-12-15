@@ -1,49 +1,21 @@
 package edu.neu.csye6200;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.table.JTableHeader;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
 import edu.neu.csye6200.controllers.RegistrationController;
 import edu.neu.csye6200.models.Student;
 import edu.neu.csye6200.models.Teacher;
-import edu.neu.csye6200.utils.Constants;
-import edu.neu.csye6200.utils.Utils;
 import edu.neu.csye6200.views.RegistrationView;
 import edu.neu.csye6200.views.StudentImmunizationView;
 
-import javax.swing.BorderFactory;
-
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.LayoutManager;
-import java.util.Properties;
-
 public class Driver {
 
-	private JFrame frame;
+	JFrame frame;
 	StudentImmunizationView studentImmunizationView;
 	RegistrationView registrationView;
 
