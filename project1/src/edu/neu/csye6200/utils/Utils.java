@@ -15,7 +15,10 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import edu.neu.csye6200Backend.DBBasicConnection;
+
 public final class Utils {
+	public static DBBasicConnection dbc;
 
 	public static JDatePickerImpl genJDatePicker() {
 		UtilDateModel model = new UtilDateModel();
@@ -54,5 +57,12 @@ public final class Utils {
 		LocalDate bday = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		Period period = Period.between(bday, today);
 		return period.getMonths();
+	}
+
+	public static DBBasicConnection getDbConnector() {
+		if (dbc == null)
+			dbc = new DBBasicConnection();
+
+		return dbc;
 	}
 }

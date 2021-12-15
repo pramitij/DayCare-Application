@@ -96,6 +96,38 @@ public class RegistrationView implements View {
 		this.studentRegSubmitButton = studentRegSubmitButton;
 	}
 
+	public JTextField getTeacherNameTextField() {
+		return teacherNameTextField;
+	}
+
+	public void setTeacherNameTextField(JTextField teacherNameTextField) {
+		this.teacherNameTextField = teacherNameTextField;
+	}
+
+	public JTextField getTeacherMobileTextField() {
+		return teacherMobileTextField;
+	}
+
+	public void setTeacherMobileTextField(JTextField teacherMobileTextField) {
+		this.teacherMobileTextField = teacherMobileTextField;
+	}
+
+	public JTextField getTeacherEmailTextField() {
+		return teacherEmailTextField;
+	}
+
+	public void setTeacherEmailTextField(JTextField teacherEmailTextField) {
+		this.teacherEmailTextField = teacherEmailTextField;
+	}
+
+	public JTextField getTeacherCatagoryTextField() {
+		return teacherCatagoryTextField;
+	}
+
+	public void setTeacherCatagoryTextField(JTextField teacherCatagoryTextField) {
+		this.teacherCatagoryTextField = teacherCatagoryTextField;
+	}
+
 	public JButton getTeacherRegSubmitButton() {
 		return teacherRegSubmitButton;
 	}

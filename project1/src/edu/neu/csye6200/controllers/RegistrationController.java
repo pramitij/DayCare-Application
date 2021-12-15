@@ -25,8 +25,10 @@ public class RegistrationController implements Controller {
 	@Override
 	public void initController() {
 		view.getStudentRegSubmitButton().addActionListener(e -> registerStudent());
+		view.getTeacherRegSubmitButton().addActionListener(e -> registerTeacher());
 	}
 
+	// reset student form fields to empty
 	private void resetStudentFields() {
 		view.getStudentNameTextField().setText("");
 		view.getStudentFatherNameTextField().setText("");
@@ -36,6 +38,35 @@ public class RegistrationController implements Controller {
 		view.getStudentDatePicker().getJFormattedTextField().setText("");
 	}
 
+	// reset teacher form fields to empty
+	private void resetTeacherFields() {
+		view.getTeacherNameTextField().setText("");
+		view.getTeacherMobileTextField().setText("");
+		view.getTeacherEmailTextField().setText("");
+		view.getTeacherCatagoryTextField().setText("");
+	}
+
+	// add teacher details to db
+	private void registerTeacher() {
+		String name = view.getTeacherNameTextField().getText();
+		String mobile = view.getTeacherMobileTextField().getText();
+		String email = view.getTeacherEmailTextField().getText();
+		String catagory = view.getTeacherCatagoryTextField().getText();
+
+//      TODO FIX dbc.addTeacher AND UNCOMMENT THIS
+//		// add data to db
+//		DBBasicConnection dbc = Utils.getDbConnector();
+//		boolean is_successful = dbc.addTeacher(name, mobile, email, catagory);
+//
+//		// show appropriate message to the user
+//		if (is_successful) {
+//			resetTeacherFields();
+//			view.showPopupDialog("Teacher has successfully Registered!!", "Success");
+//		} else
+//			view.showPopupDialog("Failed to register", "Failure");
+	}
+
+	// add student details to db
 	private void registerStudent() {
 		String name = view.getStudentNameTextField().getText();
 		String fatherName = view.getStudentFatherNameTextField().getText();
@@ -46,7 +77,7 @@ public class RegistrationController implements Controller {
 		int ageInMonths = Utils.getAgeInMonths(ageDate);
 
 		// add data to db
-		DBBasicConnection dbc = new DBBasicConnection();
+		DBBasicConnection dbc = Utils.getDbConnector();
 		boolean is_successful = dbc.addStudent(name, ageInMonths, fatherName, motherName, address, phone);
 
 		// show appropriate message to the user
