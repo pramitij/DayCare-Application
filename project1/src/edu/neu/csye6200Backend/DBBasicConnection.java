@@ -17,11 +17,122 @@ public class DBBasicConnection {
 	private static Connection a = cnct.makeConnection();
 	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
+	public int selectTeacherId(int age) {
+		int catergory = 0;
+		int [] teacherResult = new int[14];
+		int [] studentCount = new int[14];
+		int teachid = 0;
+		try {
+			if (age >= 6 && age <=12 ) {
+				catergory = 1;
+			}
+			else if (age >= 13 && age <= 24 ) {
+				catergory = 2;
+			}
+			else if (age >= 25 && age <= 35 ) {
+				catergory = 3;
+			}
+			else if (age >= 36 && age <= 47 ) {
+				catergory = 4;
+			}
+			else if (age >= 48 && age <= 59 ) {
+				catergory = 5;
+			}
+			else if (age >= 60 ) {
+				catergory = 6;
+			}
+			
+			Statement statementGetTeachId = a.createStatement();
+			ResultSet resultGetTeachId = statementGetTeachId.executeQuery("SELECT * FROM teacher WHERE catergory="+catergory);
+			int flag=0; 
+			while(resultGetTeachId.next()) {
+				int teacherId = resultGetTeachId.getInt("teacherid");
+				teacherResult[flag] = teacherId;
+				flag = flag + 1;
+			}
+			for(int i =0; i<teacherResult.length; i++) {
+				if(teacherResult[i] != 0) {
+					try {
+						Statement statementCountStudent = a.createStatement();
+						ResultSet resultGetStudentCount = statementCountStudent.executeQuery("SELECT COUNT(studentid) FROM student WHERE teacherid="+teacherResult[0]);
+						while(resultGetStudentCount.next()) {
+							int count = resultGetStudentCount.getInt("count");
+							studentCount[i]=count;
+						}
+						
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if(teacherResult[i] == 0) {
+					studentCount[i]=0;
+				}
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		for (int k = 0; k < studentCount.length; k++) {
+			if(catergory == 1) {
+				if(studentCount[k]<4) {
+					teachid = teacherResult[k];
+					break;
+				}
+				else {
+					continue;
+				}
+			}
+			if(catergory == 2) {
+				if(studentCount[k]<5) {
+					teachid = teacherResult[k];
+					break;
+				}
+				else {
+					continue;
+				}
+			}if(catergory == 3) {
+				if(studentCount[k]<6) {
+					teachid = teacherResult[k];
+					break;
+				}
+				else {
+					continue;
+				}
+			}if(catergory == 4) {
+				if(studentCount[k]<8) {
+					teachid = teacherResult[k];
+					break;
+				}
+				else {
+					continue;
+				}
+			}if(catergory == 5) {
+				if(studentCount[k]<12) {
+					teachid = teacherResult[k];
+					break;
+				}
+				else {
+					continue;
+				}
+			}if(catergory == 6) {
+				if(studentCount[k]<15) {
+					teachid = teacherResult[k];
+					break;
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		return teachid;
+	}
 	
-	public void addStudent(String studentName, int age, String fatherName, String motherName, String address, String phone, int teacherId ) {
+	public void addStudent(String studentName, int age, String fatherName, String motherName, String address, String phone) {
 		try {
 			Statement statmentAddStudents = a.createStatement();
-			statmentAddStudents.executeUpdate("INSERT INTO student(studentname,age,fathername,mothername,address,phone,teacherid) VALUES ('"+studentName+"',"+age+",'"+fatherName+"','"+motherName+"','"+address+"','"+phone+"',"+teacherId+");");
+			statmentAddStudents.executeUpdate("INSERT INTO student(studentname,age,fathername,mothername,address,phone,teacherid) VALUES ('"+studentName+"',"+age+",'"+fatherName+"','"+motherName+"','"+address+"','"+phone+"',"+selectTeacherId(age)+");");
 			LOGGER.log(Level.INFO, "New Student Added");
 		}
 		catch(Exception e) {
@@ -29,10 +140,28 @@ public class DBBasicConnection {
 		}
 	}
 	
-	public void addTeacher(String teacherName, int credit, int sectionId, int catergory) {
+	public int findSectionId(int catergory) {
+		int[] vacantSection = new int[3];
+		try {
+			Statement findSection = a.createStatement();
+			ResultSet isfilled = findSection.executeQuery("select clsid from classroom where catergory="+catergory+"and isfilled=false");
+			int vacancyFlag = 0;
+			while(isfilled.next()) {
+				int stFilled = isfilled.getInt("clsid");
+				vacantSection[vacancyFlag] = stFilled;
+				vacancyFlag = vacancyFlag + 1;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return vacantSection[0];
+	}
+	
+	public void addTeacher(String teacherName, int credit, int catergory) {
 		try {
 			Statement statmentAddStudents = a.createStatement();
-			statmentAddStudents.executeUpdate("INSERT INTO teacher(name,credit,sectionid,catergory) values ('"+teacherName+"',"+credit+","+sectionId+","+catergory+")");
+			statmentAddStudents.executeUpdate("INSERT INTO teacher(name,credit,sectionid,catergory) values ('"+teacherName+"',"+credit+","+findSectionId(catergory)+","+catergory+")");
 			LOGGER.log(Level.INFO, "New Teacher Added");
 		}
 		catch(Exception e) {
@@ -40,28 +169,28 @@ public class DBBasicConnection {
 		}
 	}
 	
-	public List<String[]> showStudentsList() {
-		List<String[]> StudentRoster = new ArrayList<>();
-		String[] tempStorage = new String[7];
+	public List<List<String>> showStudentsList() {
+		List<List<String>> StudentRoster = new ArrayList<>();
 		try {
 			Statement statmentShowStudentList = a.createStatement();
 			ResultSet resultStdAll = statmentShowStudentList.executeQuery("SELECT s.studentname,s.age,s.fathername,s.mothername,s.address,s.phone,t.teachername,s.doj FROM teacher t INNER JOIN student s ON t.teacherid = s.teacherid");
 			while (resultStdAll.next()) {
 			    String stdName = resultStdAll.getString("studentname");
-			    int age = resultStdAll.getInt("age");
+			    String age = String.valueOf(resultStdAll.getInt("age"));
 			    String fatherName = resultStdAll.getString("fathername");
 			    String motherName = resultStdAll.getString("mothername");
 			    String address = resultStdAll.getString("address");
 			    String phone = resultStdAll.getString("phone");
 			    String teacherName = resultStdAll.getString("teachername");
-			    tempStorage[0] = stdName;
-			    tempStorage[1] = String.valueOf(age);
-			    tempStorage[2] = fatherName;
-			    tempStorage[3] = motherName;
-			    tempStorage[4] = address;
-			    tempStorage[5] = phone;
-			    tempStorage[6] = teacherName;
-			    StudentRoster.add(tempStorage);
+			    List<String> temps = new ArrayList<>();
+			    temps.add(stdName);
+			    temps.add(age);
+			    temps.add(fatherName);
+			    temps.add(motherName);
+			    temps.add(address);
+			    temps.add(phone);
+			    temps.add(teacherName);
+			    StudentRoster.add(temps);
 			}
 			
 		}
@@ -71,22 +200,22 @@ public class DBBasicConnection {
 		return StudentRoster;
 	}
 	
-	public List<String[]> showTeachersList() {
-		List<String[]> teacherList = new ArrayList<>();
-		String[] tempStorageTeacher = new String[4];
+	public List<List<String>> showTeachersList() {
+		List<List<String>> teacherList = new ArrayList<>();
 		try {
 			Statement statmentShowTeacherList = a.createStatement();
 			ResultSet resultTeachAll = statmentShowTeacherList.executeQuery("SELECT t.teachername, t.credit, c.classname, t.catergory FROM teacher t INNER JOIN classroom c on t.sectionid = c.clsid");
 			while (resultTeachAll.next()) {
 			    String teachName = resultTeachAll.getString("teachername");
-			    int credit = resultTeachAll.getInt("credit");
+			    String credit = String.valueOf(resultTeachAll.getInt("credit"));
 			    String sectionId = resultTeachAll.getString("classname");
-			    int catergory = resultTeachAll.getInt("catergory");
-			    tempStorageTeacher[0] = teachName;
-			    tempStorageTeacher[1] = String.valueOf(credit);
-			    tempStorageTeacher[2] = sectionId;
-			    tempStorageTeacher[3] = String.valueOf(catergory);
-			    teacherList.add(tempStorageTeacher); 
+			    String catergory = String.valueOf(resultTeachAll.getInt("catergory"));
+			    List temps = new ArrayList<String>();
+			    temps.add(teachName);
+			    temps.add(credit);
+			    temps.add(sectionId);
+			    temps.add(catergory);
+			    teacherList.add(temps); 
 			}
 		}
 		catch(Exception e) {
@@ -94,21 +223,9 @@ public class DBBasicConnection {
 		}
 		return teacherList;
 	}
-	
-//	public void showTeachersWithAnnualReview() {
-//		Statement statementShowARTeacher;
-//		try {
-//			statementShowARTeacher = a.createStatement();
-//			ResultSet resultTAR = statementShowARTeacher.executeQuery(null);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
-	
-	public List<String[]> getVaccinationDetails(int studentId) {
-		List<String[]> vaccinationDetails = new ArrayList<>();
+//	Function returns Student Vaccination details based on Student Id
+	public List<List<String>> getVaccinationDetails(int studentId) {
+		List<List<String>> vaccinationDetails = new ArrayList<>();
 		String[] tempStorage = new String[4];
 		try {
 			Statement statementVD = a.createStatement();
@@ -118,53 +235,69 @@ public class DBBasicConnection {
 				String doseno = String.valueOf(resultvdStudent.getInt("doseno"));
 				String dateTaken = String.valueOf(resultvdStudent.getDate("datetaken"));
 				String studentName = resultvdStudent.getString("studentname");
-				tempStorage[0] = studentName;
-				tempStorage[1] = vaccinationname;
-				tempStorage[2] = doseno;
-				tempStorage[3] = dateTaken;
-				vaccinationDetails.add(tempStorage);
+				List temps = new ArrayList<String>();
+				temps.add(vaccinationname);
+				temps.add(doseno);
+				temps.add(dateTaken);
+				temps.add(studentName);
+				vaccinationDetails.add(temps);
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		for (String[] t : vaccinationDetails) {
-			System.out.println(Arrays.toString(t));
-		}
 		return vaccinationDetails;
 	}
 	
-	public List<String[]> getvaccDetailsOfStudent(int studentId) {
-		List<String[]> vaccinationDetails = new ArrayList<>();
-		List<String> summa = new ArrayList<>();
-		String[] tempStorage = new String[3];
+	public List<String> showTeacherAlertsAnnualReview() {
+		List<String> teacherListAnnualRev = new ArrayList<>();
 		try {
-			Statement statementVDStud = a.createStatement();
-			ResultSet resultStudentVD = statementVDStud.executeQuery("SELECT vaccinationname, doseno, datetaken FROM immunizations where studentid ="+studentId);
-			int i = 0;
-			while(resultStudentVD.next()) {
-				String vaccName = resultStudentVD.getString("vaccinationname");
-				String doseNos = String.valueOf(resultStudentVD.getInt("doseno"));
-				String dateTaken = String.valueOf(resultStudentVD.getDate("datetaken"));
-//				System.out.println("itr "+i);
-//				System.out.println(vaccName+" "+doseNos+" "+dateTaken);
-				tempStorage[0] = vaccName;
-				tempStorage[1] = doseNos;
-				tempStorage[2] = dateTaken;
-//				System.out.println(Arrays.toString(tempStorage));
-				System.out.println("In iteration "+i+" - "+Arrays.toString(tempStorage));
-				vaccinationDetails.add(i, tempStorage);
-				i=i+1;
-//				Arrays.fill(tempStorage, null);
-				
-//				vaccinationDetails.add(tempStorage);
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		Statement showTeacherAR = a.createStatement();
+		ResultSet resultAnRev =showTeacherAR.executeQuery("select teachername from teacher where doj>=current_date-357");
+		int flag = 0;
+		while(resultAnRev.next()) {
+			String teacherARname = resultAnRev.getString("teachername");
+			teacherListAnnualRev.add(flag, teacherARname);
+			flag = flag + 1;
+		}
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return vaccinationDetails;
+		return teacherListAnnualRev;
+	}
+	
+	public List<String> showStudentAlertsRegistration() {
+		List<String> studentsRenewalList = new ArrayList<>();
+		try {
+		Statement showStudentRegistrationRenewal = a.createStatement();
+		ResultSet resultStudentRenewal =showStudentRegistrationRenewal.executeQuery("select studentname from student where doj=current_date-355");
+		int flag = 0;
+		while(resultStudentRenewal.next()) {
+			String studentRenewal = resultStudentRenewal.getString("studentname");
+			studentsRenewalList.add(flag, studentRenewal);
+			flag = flag + 1;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return studentsRenewalList;
+	}
+	public void showStudentAlertsVaccination() {
+		List<List<String>> studentsVaccAlerts = new ArrayList<>();
+		try {
+		Statement vaccAlerts = a.createStatement();
+		ResultSet resultSetVaccAlerts = vaccAlerts.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-3 or i.datetaken<=current_date+3");
+		int flag = 0;
+		while(resultSetVaccAlerts.next()) {
+			String studentName = resultSetVaccAlerts.getString("studentname");
+//			String vacciNa
+		}
+		}
+		catch(Exception e) {
+			
+		}
 	}
 	
 	public static void Demo() throws SQLException {
@@ -176,7 +309,7 @@ public class DBBasicConnection {
 //			// returns ArrayList of teachers 
 //			List<String[]> defg = dbc.showTeachersList();
 			// returns list of vaccine based on studentid
-//			List<String[]> kiju = dbc.getVaccinationDetails(3);
+//			List<String[]> kiju = dbc.getvaccDetailsOfStudent(3);
 //			dbc.addStudent("Ashwin", 3, "Bazz", "ash", "190 highland street", "1434567890", 1);
 //			dbc.addTeacher("Ashwin", 8, 1, 2);
 //			dbc.showStudentsList();
@@ -200,11 +333,23 @@ public class DBBasicConnection {
 //			for(int i = 0; i < v; i++) {
 //				System.out.println(Arrays.toString(kiju.get(i)));
 //			}
-			List<String[]> pop = dbc.getvaccDetailsOfStudent(3);
-			System.out.println(Arrays.toString(pop.get(0)));
-			System.out.println(Arrays.toString(pop.get(1)));
+//			List<String[]> pop = dbc.getvaccDetailsOfStudent(3);
+//			System.out.println(Arrays.toString(pop.get(0)));
+//			System.out.println(Arrays.toString(pop.get(1)));
 //			dbc.getVaccinationDetails(3);
-			
+//			dbc.selectTeacherId(15);
+//			dbc.addStudent("AshwinN", 8, "Ashwin", "Balaji", "192 Highland street", "1234567890");
+//			for (String[] a : kiju) {
+//				System.out.println(Arrays.toString(a));
+//			}
+//			List<List<String>> mm = dbc.getvaccDetailsOfStudent(3);
+//			for (List<String> list : mm) {
+//				System.out.println(list.toString());
+//			}
+//			List<String> j = dbc.showTeacherAlertsAnnualReview();
+//			for (String pop : j) {
+//				System.out.println(j);
+//			}
 			a.close();
 	}
 }
