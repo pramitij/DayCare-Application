@@ -15,11 +15,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import java.awt.Font;
+import java.awt.SystemColor;
+import javax.swing.border.LineBorder;
+import javax.swing.JPanel;
 
 public class AlertFrame extends DBBasicConnection{
 
-	private JFrame frame;
-	private JTable table;
+	JFrame alertFrame;
+	public JTable table;
+	private JScrollPane scrollPane;
+	private JButton btnTeacherDetails;
+	private JButton btnStudentImunization;
 
 	/**
 	 * Launch the application.
@@ -29,7 +37,7 @@ public class AlertFrame extends DBBasicConnection{
 			public void run() {
 				try {
 					AlertFrame window = new AlertFrame();
-					window.frame.setVisible(true);
+					window.alertFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,19 +56,21 @@ public class AlertFrame extends DBBasicConnection{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setMinimumSize(new Dimension(1280, 800));
-		frame.setBounds(100, 100, 747, 502);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		alertFrame = new JFrame();
+		alertFrame.setMinimumSize(new Dimension(1280, 800));
+		alertFrame.setBounds(100, 100, 747, 502);
+		alertFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		alertFrame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Student Details");
+		btnNewButton.setBorder(new LineBorder(SystemColor.controlShadow, 1, true));
+		btnNewButton.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Statement statmentShowStudentList;
 				try {
 					statmentShowStudentList = a.createStatement();
-					ResultSet rs = statmentShowStudentList.executeQuery("SELECT s.studentname,s.age,s.fathername,s.mothername,s.address,s.phone,t.teachername,s.doj FROM teacher t INNER JOIN student s ON t.teacherid = s.teacherid");
+					ResultSet rs = statmentShowStudentList.executeQuery("select studentname from student where doj=current_date-355");
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -68,11 +78,61 @@ public class AlertFrame extends DBBasicConnection{
 				}
 			}
 		});
-		btnNewButton.setBounds(514, 50, 237, 65);
-		frame.getContentPane().add(btnNewButton);
+		btnNewButton.setBounds(128, 51, 237, 65);
+		alertFrame.getContentPane().add(btnNewButton);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBackground(SystemColor.info);
+		scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		scrollPane.setBounds(10, 190, 1246, 540);
+		alertFrame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setBounds(227, 252, 812, 371);
-		frame.getContentPane().add(table);
+		scrollPane.setViewportView(table);
+		
+		btnTeacherDetails = new JButton("Teacher Details");
+		btnTeacherDetails.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Statement statmentShowStudentList;
+				try {
+					statmentShowStudentList = a.createStatement();
+					ResultSet rs = statmentShowStudentList.executeQuery("select teachername from teacher where doj>=current_date-357");
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnTeacherDetails.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		btnTeacherDetails.setBorder(new LineBorder(SystemColor.controlShadow, 1, true));
+		btnTeacherDetails.setBounds(891, 51, 237, 65);
+		alertFrame.getContentPane().add(btnTeacherDetails);
+		
+		btnStudentImunization = new JButton("Student Imunization");
+		btnStudentImunization.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Statement statmentShowStudentList;
+				try {
+					statmentShowStudentList = a.createStatement();
+					ResultSet rs = statmentShowStudentList.executeQuery("select teachername from teacher where doj>=current_date-357");
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnStudentImunization.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		btnStudentImunization.setBorder(new LineBorder(SystemColor.controlShadow, 1, true));
+		btnStudentImunization.setBounds(509, 51, 237, 65);
+		alertFrame.getContentPane().add(btnStudentImunization);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(SystemColor.activeCaption);
+		panel.setBounds(10, 10, 1246, 166);
+		alertFrame.getContentPane().add(panel);
 	}
 }

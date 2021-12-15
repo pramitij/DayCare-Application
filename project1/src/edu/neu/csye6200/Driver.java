@@ -12,8 +12,11 @@ import edu.neu.csye6200.models.Student;
 import edu.neu.csye6200.models.Teacher;
 import edu.neu.csye6200.views.RegistrationView;
 import edu.neu.csye6200.views.StudentImmunizationView;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Driver {
+public class Driver extends AlertFrame{
 
 	JFrame frame;
 	StudentImmunizationView studentImmunizationView;
@@ -86,11 +89,20 @@ public class Driver {
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBackground(Color.orange);
 		homeTabbedPane.addTab("Information", null, infoPanel, null);
+		
+		JButton btnNewButton = new JButton("Click for Upcoming Alert's");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AlertFrame alertPage = new AlertFrame();
+				alertPage.alertFrame.setVisible(true);
+			}
+		});
+		homeTabbedPane.addTab("Alerts", null, btnNewButton, null);
 
-		// 4. Alerts Page
-		JPanel alertsPanel = new JPanel();
-		alertsPanel.setBackground(Color.MAGENTA);
-		homeTabbedPane.addTab("Alerts", null, alertsPanel, null);
+//		// 4. Alerts Page
+//		JPanel alertsPanel = new JPanel();
+//		alertsPanel.setBackground(Color.MAGENTA);
+//		homeTabbedPane.addTab("Alerts", null,alertsPanel, null);
 	}
 
 }

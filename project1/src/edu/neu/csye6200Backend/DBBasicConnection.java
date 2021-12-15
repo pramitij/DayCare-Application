@@ -160,8 +160,12 @@ public class DBBasicConnection {
 		return vacantSection[0];
 	}
 	
+<<<<<<< HEAD
 	public boolean addTeacher(String teacherName, int credit, int catergory, String email, String phone) {
 		int sectionId = findSectionId(catergory);
+=======
+		public boolean addTeacher(String teacherName, int credit, int catergory, String email, String phone) {
+>>>>>>> 13ebf9f93bad746ad630170b34702b46352cfc78
 		try {
 			Statement statmentAddStudents = a.createStatement();
 			statmentAddStudents.executeUpdate("INSERT INTO teacher(teachername,credit,sectionid,catergory,email,phone) values ('"+teacherName+"',"+0+","+sectionId+","+catergory+",'"+email+"','"+phone+"')");
