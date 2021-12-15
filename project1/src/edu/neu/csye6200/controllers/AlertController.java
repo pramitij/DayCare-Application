@@ -40,8 +40,7 @@ public class AlertController implements Controller {
 		Statement statmentShowStudentList;
 		try {
 			statmentShowStudentList = dbc.a.createStatement();
-			ResultSet rs = statmentShowStudentList
-					.executeQuery("select studentname from student where doj=current_date-355");
+			ResultSet rs = statmentShowStudentList.executeQuery("select * from student where doj=current_date-355");
 			table.setModel(DbUtils.resultSetToTableModel(rs));
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -54,8 +53,7 @@ public class AlertController implements Controller {
 		Statement statmentShowStudentList;
 		try {
 			statmentShowStudentList = dbc.a.createStatement();
-			ResultSet rs = statmentShowStudentList
-					.executeQuery("select teachername from teacher where doj>=current_date-357");
+			ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher where doj>=current_date-357");
 			table.setModel(DbUtils.resultSetToTableModel(rs));
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -68,8 +66,7 @@ public class AlertController implements Controller {
 		Statement statmentShowStudentList;
 		try {
 			statmentShowStudentList = dbc.a.createStatement();
-			ResultSet rs = statmentShowStudentList
-					.executeQuery("select teachername from teacher where doj>=current_date-357");
+			ResultSet rs = statmentShowStudentList.executeQuery("select * from teacher where doj>=current_date-357");
 			table.setModel(DbUtils.resultSetToTableModel(rs));
 		} catch (SQLException e1) {
 			e1.printStackTrace();

@@ -92,6 +92,8 @@ public class AlertView implements View {
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(SystemColor.info);
 		scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		scrollPane.setEnabled(false);
+		scrollPane.setVerifyInputWhenFocusTarget(false);
 		bodyPanel.add(scrollPane);
 
 		table = new JTable();
