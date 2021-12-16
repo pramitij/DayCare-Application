@@ -1,18 +1,11 @@
 package edu.neu.csye6200.models;
 
-public class Teacher {
-	private String name;
+public class Teacher extends Person implements PersonFactoryInterface{
+	
 	private String phone;
 	private String email;
 	private int Catagory;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getPhone() {
 		return phone;
@@ -36,5 +29,11 @@ public class Teacher {
 
 	public void setCatagory(int catagory) {
 		Catagory = catagory;
+	}
+
+	@Override
+	public void PersonFactoryInterface() {
+		// TODO Auto-generated method stub
+		
 	}
 }
