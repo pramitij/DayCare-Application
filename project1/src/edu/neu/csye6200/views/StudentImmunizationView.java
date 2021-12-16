@@ -21,6 +21,60 @@ import edu.neu.csye6200.utils.Constants;
 import edu.neu.csye6200.utils.Utils;
 
 public class StudentImmunizationView implements View {
+	private JTextField studentIdTextField;
+	private JComboBox vaccineTypeComboBox;
+	private JComboBox vaccineDoseComboBox;
+	private JDatePickerImpl datePicker;
+	private JTable vaccineInfoTable;
+	private JButton vaccineSubmitButton;
+
+	public JTextField getStudentIdTextField() {
+		return studentIdTextField;
+	}
+
+	public void setStudentIdTextField(JTextField studentIdTextField) {
+		this.studentIdTextField = studentIdTextField;
+	}
+
+	public JComboBox getVaccineTypeComboBox() {
+		return vaccineTypeComboBox;
+	}
+
+	public void setVaccineTypeComboBox(JComboBox vaccineTypeComboBox) {
+		this.vaccineTypeComboBox = vaccineTypeComboBox;
+	}
+
+	public JComboBox getVaccineDoseComboBox() {
+		return vaccineDoseComboBox;
+	}
+
+	public void setVaccineDoseComboBox(JComboBox vaccineDoseComboBox) {
+		this.vaccineDoseComboBox = vaccineDoseComboBox;
+	}
+
+	public JDatePickerImpl getDatePicker() {
+		return datePicker;
+	}
+
+	public void setDatePicker(JDatePickerImpl datePicker) {
+		this.datePicker = datePicker;
+	}
+
+	public JButton getVaccineSubmitButton() {
+		return vaccineSubmitButton;
+	}
+
+	public void setVaccineSubmitButton(JButton vaccineSubmitButton) {
+		this.vaccineSubmitButton = vaccineSubmitButton;
+	}
+
+	public JTable getVaccineInfoTable() {
+		return vaccineInfoTable;
+	}
+
+	public void setVaccineInfoTable(JTable vaccineInfoTable) {
+		this.vaccineInfoTable = vaccineInfoTable;
+	}
 
 	@Override
 	public JPanel initialize() {
@@ -52,7 +106,7 @@ public class StudentImmunizationView implements View {
 		gbc.anchor = GridBagConstraints.EAST;
 		addImmunizationPanel.add(studentIdLabel, gbc);
 
-		JTextField studentIdTextField = new JTextField();
+		studentIdTextField = new JTextField();
 		studentIdTextField.setColumns(Constants.TEXT_FIELD_WIDTH);
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -69,7 +123,7 @@ public class StudentImmunizationView implements View {
 		addImmunizationPanel.add(vaccineTypeLabel, gbc);
 
 		String vaccineTypes[] = { "Hib", "DTap", "Polio", "Hepatitis B", "MMR", "Varicella" };
-		JComboBox vaccineTypeComboBox = new JComboBox(vaccineTypes);
+		vaccineTypeComboBox = new JComboBox(vaccineTypes);
 		vaccineTypeComboBox.setPreferredSize(Constants.COMBO_BOX_DIM);
 		gbc.gridx = 1;
 		gbc.gridy = 2;
@@ -86,7 +140,7 @@ public class StudentImmunizationView implements View {
 		addImmunizationPanel.add(vaccineDoseNoLabel, gbc);
 
 		String vaccineDoseTypes[] = { "1", "2", "3", "4" };
-		JComboBox vaccineDoseComboBox = new JComboBox(vaccineDoseTypes);
+		vaccineDoseComboBox = new JComboBox(vaccineDoseTypes);
 		vaccineDoseComboBox.setPreferredSize(Constants.COMBO_BOX_DIM);
 		gbc.gridx = 1;
 		gbc.gridy = 3;
@@ -102,7 +156,7 @@ public class StudentImmunizationView implements View {
 		gbc.anchor = GridBagConstraints.EAST;
 		addImmunizationPanel.add(vaccineDateLabel, gbc);
 
-		JDatePickerImpl datePicker = Utils.genJDatePicker();
+		datePicker = Utils.genJDatePicker();
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 		gbc.gridwidth = 1;
@@ -110,7 +164,7 @@ public class StudentImmunizationView implements View {
 		addImmunizationPanel.add(datePicker, gbc);
 
 		// Submit button
-		JButton vaccineSubmitButton = new JButton("Add/Update");
+		vaccineSubmitButton = new JButton("Add");
 		vaccineSubmitButton.setPreferredSize(new Dimension(110, 40));
 		vaccineSubmitButton.setFont(Constants.BUTTON_FONT);
 		gbc.gridx = 0;
@@ -144,7 +198,8 @@ public class StudentImmunizationView implements View {
 
 		// table column names
 		String[] columnNames = { "Student ID", "Vaccine Type", "Dose No", "Date" };
-		JTable vaccineInfoTable = new JTable(data, columnNames);
+
+		vaccineInfoTable = new JTable(data, columnNames);
 		vaccineInfoTable.setEnabled(false);
 
 		// Increase table content font size

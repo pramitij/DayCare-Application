@@ -7,7 +7,6 @@ public class Student extends Person implements PersonFactoryInterface{
 	private String address;
 	private int phone;
 
-
 	public String getFatherName() {
 		return fatherName;
 	}
