@@ -3,6 +3,8 @@ package edu.neu.csye6200.controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Date;
 
 import javax.swing.JTable;
 
@@ -35,7 +37,17 @@ public class StudentImmunizationController implements Controller {
 	// get student vaccine details
 	private void getStudentVaccineDetails() {
 		// add new student vaccine detail to db
+		String studentId = view.getStudentIdTextField().getText();
+		String vaccineType = Arrays.toString((String[]) view.getVaccineTypeComboBox().getSelectedItem());
+		String vaccineDose = Arrays.toString((String[]) view.getVaccineDoseComboBox().getSelectedItem());
 		
+		Date selectedDate = (Date) view.getDatePicker().getModel().getValue();
+
+		dbc.addStudentVaccine(
+				studentId,
+				vaccineType,
+				Integer.parseInt(vaccineDose),
+				selectedDate);
 		
 		// view student vaccine details on table
 		Statement statmentShowStudentList;
