@@ -293,17 +293,6 @@ public class DBBasicConnection {
 		return studentsRenewalList;
 	}
 	
-//	public boolean addVaccinationDetails(String vaccinationname, int doseno, LocalDate datetaken, int studentId ) {
-//		try {
-//			Statement vaccAlertsHib = a.createStatement();
-//			vaccAlertsHib.executeUpdate("INSERT INTO immunizations(vaccinationname, doseno, datetaken, studentid) values('"+vaccinationname+"',"+doseno+","+datetaken+","+studentId+")");
-//			return true;
-//		}
-//		catch(Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//}
 	
 	public boolean addVaccinationDetails(String vaccinationname, int doseno, Date datetaken, int studentId ) {
 		try {
@@ -329,34 +318,7 @@ public boolean updateVaccinationDetails(String vaccinationname, int doseno, Date
 	}
 }
 	
-	/// This is the code 
-	public void showStudentAlertsVaccination() {
-		List<List<String>> studentsVaccAlerts = new ArrayList<>();
-		try {
-			// select s.studentname, i.vaccinationname, i.doseno from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'tdap' and i.doseno=2
-			// vaccinationname --- Hib, Dtap, Polio, HepB, Mmr, Varicella
-		Statement vaccAlertsHib = a.createStatement();
-		ResultSet resultSetVaccAlertsHib = vaccAlertsHib.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'Hib'");
-		Statement vaccAlertsDtap = a.createStatement();
-		ResultSet resultSetVaccAlertsDtap = vaccAlertsDtap.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'Dtap'");
-		Statement vaccAlertsPolio = a.createStatement();
-		ResultSet resultSetVaccAlertsPolio = vaccAlertsPolio.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'Polio'");
-		Statement vaccAlertsHepB = a.createStatement();
-		ResultSet resultSetVaccAlertsHepB = vaccAlertsHepB.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'HepB'");
-		Statement vaccAlertsMmr = a.createStatement();
-		ResultSet resultSetVaccAlertsMmr = vaccAlertsMmr.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'Mmr'");
-		Statement vaccAlertsVaricella = a.createStatement();
-		ResultSet resultSetVaccAlertsVaricella = vaccAlertsVaricella.executeQuery("select s.studentname, i.vaccinationname, i.doseno+1 from immunizations i inner join student s on i.studentid = s.studentid where i.datetaken>=current_date-2 or i.datetaken<=current_date+2 and i.vaccinationname = 'Varicella'");
-		
-		int flag = 0;
-		while(resultSetVaccAlertsHib.next()) {
-			String studentName = resultSetVaccAlertsHib.getString("studentname");
-		}
-		}
-		catch(Exception e) {
-			
-		}
-	}
+
 	
 	public void Demo() throws SQLException {
 		System.out.println("----- Database connection class ------");
@@ -408,7 +370,7 @@ public boolean updateVaccinationDetails(String vaccinationname, int doseno, Date
 //			for (String pop : j) {
 //				System.out.println(j);
 //			}
-			dbc.addVaccinationDetails("bip", 3, Date.valueOf(LocalDate.now()) , 3);
+//			dbc.addVaccinationDetails("bip", 3, Date.valueOf(LocalDate.now()) , 3);
 			
 			a.close();
 	}
