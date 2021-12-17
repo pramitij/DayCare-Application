@@ -167,6 +167,31 @@ public class DBBasicConnection {
 		return vaccinationDetails;
 	}
 	
+
+	public boolean addVaccinationDetails(String vaccinationname, int doseno, Date datetaken, int studentId ) {
+			try {
+				Statement vaccAlertsHib = a.createStatement();
+				vaccAlertsHib.executeUpdate("INSERT INTO immunizations(vaccinationname, doseno, datetaken, studentid) values('"+vaccinationname+"',"+doseno+","+datetaken+","+studentId+")");
+				return true;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+	}
+	
+	public boolean updateVaccinationDetails(String vaccinationname, int doseno, Date datetaken, int studentId ) {
+		try {
+			Statement vaccAlertsHib = a.createStatement();
+			vaccAlertsHib.executeUpdate("UPDATE immunizations SET vaccinationname='"+vaccinationname+"',doseno="+doseno+",datetaken="+datetaken+",studentid="+studentId);
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+}
+	
 	public static void Demo() throws SQLException {
 		System.out.println("----- Database connection class ------");
 			DBBasicConnection dbc = new DBBasicConnection();
