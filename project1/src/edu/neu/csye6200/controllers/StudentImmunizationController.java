@@ -3,6 +3,8 @@ package edu.neu.csye6200.controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -37,23 +39,27 @@ public class StudentImmunizationController implements Controller {
 	// get student vaccine details
 	private void getStudentVaccineDetails() {
 		// add new student vaccine detail to db
-		String studentId = view.getStudentIdTextField().getText();
-		String vaccineType = Arrays.toString((String[]) view.getVaccineTypeComboBox().getSelectedItem());
-		String vaccineDose = Arrays.toString((String[]) view.getVaccineDoseComboBox().getSelectedItem());
-		
+		int studentId = Integer.parseInt(view.getStudentIdTextField().getText());
+		String vaccineName = view.getVaccineTypeComboBox().getSelectedItem().toString();
+		String vaccineDose = view.getVaccineDoseComboBox().getSelectedItem().toString();
 		Date selectedDate = (Date) view.getDatePicker().getModel().getValue();
+		java.sql.Date sqlSelectedDate = new java.sql.Date(selectedDate.getTime());
 
-		dbc.addStudentVaccine(
-				studentId,
-				vaccineType,
-				Integer.parseInt(vaccineDose),
-				selectedDate);
-		
+//	    java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+//	    System.out.println(localDate);
+
+		dbc.addVaccinationDetails(vaccineName, Integer.parseInt(vaccineDose), sqlSelectedDate, studentId);
+
 		// view student vaccine details on table
 		Statement statmentShowStudentList;
 		try {
 			statmentShowStudentList = dbc.a.createStatement();
-			ResultSet rs = statmentShowStudentList.executeQuery("select * from student");
+//			ResultSet rs = statmentShowStudentList.executeQuery("select * from student");
+
+			ResultSet rs = statmentShowStudentList.executeQuery(
+					"select s.studentname, i.vaccinationname, i.doseno, i.datetaken from immunizations i inner join student s on i.studentid = s.studentid where i.studentid="
+							+ studentId);
+
 			view.getVaccineInfoTable().setModel(DbUtils.resultSetToTableModel(rs));
 		} catch (SQLException e1) {
 			e1.printStackTrace();

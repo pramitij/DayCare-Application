@@ -191,15 +191,15 @@ public class StudentImmunizationView implements View {
 		gbc.anchor = GridBagConstraints.CENTER;
 		viewImmunizationPanel.add(ImmunizationDetailsTitleLabel, gbc);
 
-		// table rows
-		String[][] data = { { "23", "Hib", "1", "2021-09-03" }, { "23", "DTap", "1", "2021-09-03" },
-				{ "23", "Polio", "1", "2021-09-03" }, { "23", "MMR", "1", "2021-09-03" },
-				{ "23", "Varicella", "1", "2021-09-03" }, { "23", "Hepatitis B", "1", "2021-09-03" } };
+//		// table rows
+//		String[][] data = { { "23", "Hib", "1", "2021-09-03" }, { "23", "DTap", "1", "2021-09-03" },
+//				{ "23", "Polio", "1", "2021-09-03" }, { "23", "MMR", "1", "2021-09-03" },
+//				{ "23", "Varicella", "1", "2021-09-03" }, { "23", "Hepatitis B", "1", "2021-09-03" } };
+//
+//		// table column names
+//		String[] columnNames = { "Student ID", "Vaccine Type", "Dose No", "Date" };
 
-		// table column names
-		String[] columnNames = { "Student ID", "Vaccine Type", "Dose No", "Date" };
-
-		vaccineInfoTable = new JTable(data, columnNames);
+		vaccineInfoTable = new JTable();
 		vaccineInfoTable.setEnabled(false);
 
 		// Increase table content font size

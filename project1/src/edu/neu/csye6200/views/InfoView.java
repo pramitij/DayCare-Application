@@ -26,7 +26,8 @@ public class InfoView implements View {
 	private JTable table;
 	private JButton btnStudentDetails;
 	private JButton btnTeacherDetails;
-
+	private JButton btnStudentImmunization;
+	
 	public JTable getTable() {
 		return table;
 	}
@@ -127,6 +128,26 @@ public class InfoView implements View {
 		btnTeacherDetails.setBounds(111, 400, 182, 60);
 		infoPanel.add(btnTeacherDetails);
 
+		// Student Immunization Button
+		btnStudentImmunization = new JButton("Student Vaccine");
+		btnStudentImmunization.setForeground(SystemColor.window);
+		btnStudentImmunization.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Statement statmentShowStudentList;
+				try {
+					statmentShowStudentList = dbc.a.createStatement();
+					ResultSet rs = statmentShowStudentList.executeQuery("select * from immunizations");
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnStudentImmunization.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		btnStudentImmunization.setBorder(new LineBorder(SystemColor.scrollbar, 1, true));
+		btnStudentImmunization.setBackground(new Color(135, 206, 235));
+		btnStudentImmunization.setBounds(111, 500, 182, 60);
+		infoPanel.add(btnStudentImmunization);		
 		return infoPanel;
 	}
 

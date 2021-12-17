@@ -7,6 +7,7 @@ import java.sql.Statement;
 import javax.swing.JTable;
 
 import edu.neu.csye6200.models.Student;
+import edu.neu.csye6200.utils.Utils;
 import edu.neu.csye6200.views.InfoView;
 import edu.neu.csye6200.views.RegistrationView;
 import edu.neu.csye6200Backend.DBBasicConnection;
@@ -20,6 +21,7 @@ public class InfoController implements Controller {
 	public InfoController(Student model, InfoView view) {
 		this.model = model;
 		this.view = view;
+		dbc = Utils.getDbConnector();
 		initView();
 		initController();
 	}

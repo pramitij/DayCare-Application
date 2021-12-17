@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -292,10 +293,22 @@ public class DBBasicConnection {
 		return studentsRenewalList;
 	}
 	
+//	public boolean addVaccinationDetails(String vaccinationname, int doseno, LocalDate datetaken, int studentId ) {
+//		try {
+//			Statement vaccAlertsHib = a.createStatement();
+//			vaccAlertsHib.executeUpdate("INSERT INTO immunizations(vaccinationname, doseno, datetaken, studentid) values('"+vaccinationname+"',"+doseno+","+datetaken+","+studentId+")");
+//			return true;
+//		}
+//		catch(Exception e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//}
+	
 	public boolean addVaccinationDetails(String vaccinationname, int doseno, Date datetaken, int studentId ) {
 		try {
 			Statement vaccAlertsHib = a.createStatement();
-			vaccAlertsHib.executeUpdate("INSERT INTO immunizations(vaccinationname, doseno, datetaken, studentid) values('"+vaccinationname+"',"+doseno+","+datetaken+","+studentId+")");
+			vaccAlertsHib.executeUpdate("INSERT INTO immunizations(vaccinationname, doseno, datetaken, studentid) values('"+vaccinationname+"',"+doseno+",'"+datetaken+"',"+studentId+")");
 			return true;
 		}
 		catch(Exception e) {
@@ -395,6 +408,8 @@ public boolean updateVaccinationDetails(String vaccinationname, int doseno, Date
 //			for (String pop : j) {
 //				System.out.println(j);
 //			}
+			dbc.addVaccinationDetails("bip", 3, Date.valueOf(LocalDate.now()) , 3);
+			
 			a.close();
 	}
 }
