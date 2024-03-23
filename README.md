@@ -3,11 +3,11 @@ Full Stack Application - Daycare Hub
 
 ## Features
 
-- ""Parent-Teacher Communication:"" A secure and private channel for updates, sharing milestones, and scheduling meetings.
-- ""Attendance Tracking:"" Effortless check-in and check-out for children, with real-time updates sent to parents.
-- ""Event Calendar:"" Comprehensive scheduling tool for planning and notifying about upcoming events, activities, and closures.
-- ""Photo and Video Sharing:"" A dedicated space for teachers to share moments from the day, allowing parents to feel connected to their child's daily experiences.
-- ""Health and Safety Updates:"" Immediate notifications regarding health checks, meal times, and incident reports.
+- **Parent-Teacher Communication:** A secure and private channel for updates, sharing milestones, and scheduling meetings.
+- **Attendance Tracking:** Effortless check-in and check-out for children, with real-time updates sent to parents.
+- **Event Calendar:** Comprehensive scheduling tool for planning and notifying about upcoming events, activities, and closures.
+- **Photo and Video Sharing:** A dedicated space for teachers to share moments from the day, allowing parents to feel connected to their child's daily experiences.
+- **Health and Safety Updates:** Immediate notifications regarding health checks, meal times, and incident reports.
 
 ## Technical Overview
 The application is built on a robust stack that ensures reliability, scalability, and security:
